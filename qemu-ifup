@@ -1,0 +1,11 @@
+#!/bin/sh
+# Author: grishnan https://github.com/grishnan
+# E-mail: grishnan@gmail.com
+# License: GNU GENERAL PUBLIC LICENSE Version 3
+
+switch=br0
+
+if [ -n "$1" ];then
+  ip link set $1 up
+  ip link set $1 master $switch
+fi

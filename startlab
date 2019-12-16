@@ -1,0 +1,21 @@
+#!/bin/bash
+# Author: grishnan https://github.com/grishnan
+# E-mail: grishnan@gmail.com
+# License: GNU GENERAL PUBLIC LICENSE Version 3
+
+mdir=machines # machines directory
+switch=br0    # bridge name
+
+if ! ip -br -f link -c a | awk '{ print $1 }' | grep $switch > /dev/null 2>&1; then
+  ip link add $switch type bridge
+fi
+ip link set $switch up
+
+mac1=$(printf '00:60:2F:%02X:%02X:%02X\n' $[RANDOM%256] $[RANDOM%256] $[RANDOM%256])
+mac2=$(printf '00:60:2F:%02X:%02X:%02X\n' $[RANDOM%256] $[RANDOM%256] $[RANDOM%256])
+mac3=$(printf '00:60:2F:%02X:%02X:%02X\n' $[RANDOM%256] $[RANDOM%256] $[RANDOM%256])
+mac4=$(printf '00:60:2F:%02X:%02X:%02X\n' $[RANDOM%256] $[RANDOM%256] $[RANDOM%256])
+
+qemu-system-x86_64 -name CLI-C -enable-kvm -accel kvm -machine q35,kernel_irqchip=on,vmport=off -cpu host -smp cores=2 -boot order=c -drive file=$mdir/CLI-C.img,format=raw -m size=200M -device virtio-net,netdev=lan0,mac=$mac1 -netdev tap,id=lan0,script=./qemu-ifup,downscript=./qemu-ifdown -vga std &
+qemu-system-x86_64 -name CLI-P -enable-kvm -accel kvm -machine q35,kernel_irqchip=on,vmport=off -cpu host -smp cores=2 -boot order=c -drive file=$mdir/CLI-P.img,format=raw -m size=200M -device virtio-net,netdev=lan0,mac=$mac2 -netdev tap,id=lan0,script=./qemu-ifup,downscript=./qemu-ifdown -vga std &
+qemu-system-x86_64 -name SRV -enable-kvm -accel kvm -machine q35,kernel_irqchip=on,vmport=off -cpu host -smp cores=2 -boot order=c -drive file=$mdir/SRV.img,format=raw -m size=200M -device e1000,netdev=network0,mac=$mac3 -netdev user,id=network0 -device e1000,netdev=network1,mac=$mac4 -netdev tap,id=network1,script=./qemu-ifup,downscript=./qemu-ifdown -vga std &

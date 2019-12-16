@@ -1,0 +1,9 @@
+#!/bin/bash
+# Author: grishnan https://github.com/grishnan
+# E-mail: grishnan@gmail.com
+# License: GNU GENERAL PUBLIC LICENSE Version 3
+
+switch=br0
+if [ -n "$1" ];then
+  ip link del $1 master $switch
+fi
