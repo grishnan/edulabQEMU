@@ -17,15 +17,11 @@ function genmac {
 
 function startmachine {
   qemu-system-x86_64 -name $1 -enable-kvm -accel kvm -machine q35,kernel_irqchip=on,vmport=off \
-                     -cpu host -smp cores=$2 -boot order=c -drive file=$mdir/$1.img,format=raw -m size=$3M \
+                     -cpu host -smp cores=$2 -boot order=c -drive file=$mdir/$1.img,format=raw -m size=$3M $5 \
                      -device virtio-net,netdev=$4,mac=$(genmac) -netdev tap,id=$4,script=./qemu-ifup,downscript=./qemu-ifdown &
 }
 
-# startmachine <machine name> <cores> <memory> <lan id>
-startmachine CLI-C 2 200 lan0 
+# startmachine <machine name> <cores> <memory in MB> <lan id>
+startmachine CLI-C 2 200 lan0
 startmachine CLI-P 2 200 lan0
-
-qemu-system-x86_64 -name SRV -enable-kvm -accel kvm -machine q35,kernel_irqchip=on,vmport=off \
-                   -cpu host -smp cores=2 -boot order=c -drive file=$mdir/SRV.img,format=raw -m size=200M \
-                   -device e1000,netdev=network0,mac=$(genmac) -netdev user,id=network0 \
-                   -device e1000,netdev=network1,mac=$(genmac) -netdev tap,id=network1,script=./qemu-ifup,downscript=./qemu-ifdown &
+startmachine SRV   2 200 lan0 "-device e1000,netdev=wan0,mac=$(genmac) -netdev user,id=wan0"
