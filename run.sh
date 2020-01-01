@@ -3,43 +3,72 @@
 # E-mail: grishnan@gmail.com
 # License: GNU GENERAL PUBLIC LICENSE Version 3
 
+CA=2 # configurations amount
+
 function check_root_privileges {
   if [ $EUID -ne 0 ]; then
-    echo "You must have root privileges"
+    echo -e "\e[31mYou must have root privileges\033[0m"
     echo
     return 1 # non root privileges
   fi
   return 0 # root privileges
 }
 
+function print_scheme () {
+  case $1 in
+    1) 
+      echo
+      echo -e "\033[1mCLI-C\033[0m"
+      echo -e "     \\"
+      echo -e "      br0 — \033[1mSRV\033[0m — WAN"
+      echo -e "     /"
+      echo -e "\033[1mCLI-P\033[0m"
+      echo ;;
+    2)
+      echo
+      echo -e "\033[1mCLI-C\033[0m — br0 — \033[1mSRV\033[0m — WAN"
+      echo ;;
+  esac
+}
+
 function print_help {
   echo
   echo "Help:"
   echo
-  echo "  1   "
+  echo "  n   run configuration №n (n - number) "
   echo "  h   print this help"
   echo "  q   quit"
   echo 
 }
 
-clear
+function startlab {
+  read -p "Run this configuration? (y/n): " answer
+  case $answer in
+    y|Y) ./startlab; exit 0 ;;
+    *) echo ;;
+  esac
+}
+
+clear # screen
+
 echo "Welcome to edulabQEMU."
 while [ 1 ]
 do
   echo -e "\033[1mPlease, choose one of the listed options\033[0m:"
   echo
-  echo "1. PVB.SCC.DDD.[1W1L][1L][1L]"
-  echo "2. Second configuration."
+  echo "1. Private virtual bridge. Only debian. Access to WAN via server. Two clients."
+  echo "2. Private virtual bridge. Only debian. Access to WAN via server. One client."
   echo "3. Third configuration."
   echo
   read -p "Your option (h for help): " option
 
-  case $option in
-    h) print_help ;;
-    1) if check_root_privileges ; then ./startlab; fi ;;
-    q) exit 0 ;;
-    *) echo -e "\e[31m$option: uknown option\033[0m"; echo ;;
-  esac
-
+  if [[ $(seq $CA) =~ (^|[[:space:]])$option($|[[:space:]]) ]]; then
+    if check_root_privileges; then print_scheme $option; startlab; fi
+  else
+    case $option in
+      h) print_help ;;
+      q) exit 0 ;;
+      *) echo -e "\e[31m$option: unknown option\033[0m"; echo ;;
+    esac
+  fi
 done
-
