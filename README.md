@@ -5,8 +5,9 @@ Virtual laboratory for educational purposes aimed at starting of typical virtual
 
 QEMU version 4.1.0
 
+
 # Run laboratory:
 
 1. cd to edulabQEMU
-2. chmod +x qemu-ifup qemu-ifdown startlab
-3. sudo ./startlab
+2. chmod +x qemu-ifup qemu-ifdown startlab run.sh
+3. sudo ./run.sh
