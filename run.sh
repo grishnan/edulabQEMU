@@ -56,12 +56,12 @@ while [ 1 ]
 do
   echo -e "\033[1mPlease, choose one of the listed options\033[0m:"
   echo
-  echo "1. Private virtual bridge. Only debian. Access to WAN via server. Two clients."
-  echo "2. Private virtual bridge. Only debian. Access to WAN via server. One client."
-  echo "3. Private virtual bridge. Only windows. Access to WAN via server (GUI). Two clients."
-  echo "4. Private virtual bridge. Only windows. Access to WAN via server (GUI). One client."
-  echo "5. Private virtual bridge. Only windows. Access to WAN via server (Core). Two clients."
-  echo "6. Private virtual bridge. Only windows. Access to WAN via server (Core). One client."
+  echo "1. Linux. Two clients."
+  echo "2. Linux. One client."
+  echo "3. Windows. Server GUI. Two clients."
+  echo "4. Windows. Server GUI. One client."
+  echo "5. Windows. Server Core. Two clients."
+  echo "6. Windows. Server Core. One client."
   echo
   read -p "Your option (h for help): " option
 
