@@ -14,3 +14,6 @@ QEMU version 4.1.0
 1. cd to edulabQEMU
 2. chmod +x qemu-ifup qemu-ifdown startlab run.sh
 3. sudo ./run.sh
+
+# TODO:
+1. automate snapshots creation
