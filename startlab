@@ -21,7 +21,20 @@ function startmachine {
                      -device e1000,netdev=lan0,mac=$(genmac) -netdev tap,id=lan0,script=./qemu-ifup,downscript=./qemu-ifdown &
 }
 
+function check_vm {
+  # check whether virtual machines exist in directory $1
+  for vm in $(ls ./machines/$1/.base/)
+  do
+    if ! test -f ./machines/$1/$vm.qcow2; then
+      cd ./machines/$1/
+      qemu-img create -f qcow2 -b .base/$vm $vm.qcow2 > /dev/null 2>&1
+      cd ../../
+    fi
+  done
+}
+
 function startmachines {
+  check_vm $1
   if [ $# -eq 3 ]; then
     # startmachine <machine name> <cores> <memory in MB> <dir>
     startmachine SRV   2 $2 $1 "-device e1000,netdev=wan0,mac=$(genmac) -netdev user,id=wan0"
