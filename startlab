@@ -22,7 +22,7 @@ function startmachine {
 }
 
 function check_vm {
-  # check whether virtual machines exist in directory $1
+  # check whether snapshots of VMs exist in directory $1 and if not, create their
   for vm in $(ls ./machines/$1/.base/)
   do
     if ! test -f ./machines/$1/$vm.qcow2; then
