@@ -46,6 +46,14 @@ function startmachines {
   fi
 }
 
+# create hard disk drives if they don't exist
+if ! test -f ./machines/hd/hd1.qcow2; then
+  qemu-img create -f qcow2 ./machines/hd/hd1.qcow2 2G > /dev/null 2>&1
+fi
+if ! test -f ./machines/hd/hd2.qcow2; then
+  qemu-img create -f qcow2 ./machines/hd/hd2.qcow2 2G > /dev/null 2>&1
+fi
+
 case $1 in
   1) startmachines 1 200 200 200  ;; # startmachines <dir> <mem SRV> <mem CLI-C> <mem CLI-P>
   2) startmachines 2 200 200      ;; # startmachines <dir> <mem SRV> <mem CLI-C>
