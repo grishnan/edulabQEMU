@@ -19,6 +19,3 @@ Please note that files CLI-C.qcow2, CLI-P.qcow2, SRV.qcow2 are created automatic
 1. cd to edulabQEMU
 2. chmod +x qemu-ifup qemu-ifdown startlab run.sh
 3. sudo ./run.sh
-
-# TODO:
-1. automate snapshots creation
