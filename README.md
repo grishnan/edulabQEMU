@@ -11,11 +11,13 @@ QEMU version 4.1.0
 4. Directory "base" must contain original qcow2 virtual machines. For example, debian.qcow2, windows10.qcow2 etc.
 5. Every numbered directory must contain hidden directory ".base" all of which contain symlinks SRV, CLI-C or CLI-P to the original virtual machines:
 
-![dirs structure](https://user-images.githubusercontent.com/7554459/71783896-3411c580-2ffe-11ea-8cd1-16230375ea70.png)
+![dirs structure](https://user-images.githubusercontent.com/7554459/72189725-aaebfb80-340e-11ea-9774-6a4ed1585008.png)
 
 Please note that files CLI-C.qcow2, CLI-P.qcow2, SRV.qcow2 are created automatically. These are snapshots of corresponding original VMs.
+
 
 # Run laboratory:
 1. cd to edulabQEMU
 2. chmod +x qemu-ifup qemu-ifdown startlab run.sh
 3. sudo ./run.sh
+
