@@ -3,7 +3,7 @@
 # E-mail: grishnan@gmail.com
 # License: GNU GENERAL PUBLIC LICENSE Version 3
 
-CA=6 # configurations amount
+CA=8 # configurations amount
 
 function check_root_privileges {
   if [ $EUID -ne 0 ]; then
@@ -16,7 +16,7 @@ function check_root_privileges {
 
 function print_scheme () {
   case $1 in
-    1|3|5) 
+    1|3|5|7) 
       echo
       echo -e "\033[1mCLI-C\033[0m"
       echo -e "     \\"
@@ -24,7 +24,7 @@ function print_scheme () {
       echo -e "     /"
       echo -e "\033[1mCLI-P\033[0m"
       echo ;;
-    2|4|6)
+    2|4|6|8)
       echo
       echo -e "\033[1mCLI-C\033[0m — br0 — \033[1mSRV\033[0m — WAN"
       echo ;;
@@ -56,12 +56,14 @@ while [ 1 ]
 do
   echo -e "\033[1mPlease, choose one of the listed options\033[0m:"
   echo
-  echo "1. Linux. Two clients."
-  echo "2. Linux. One client."
-  echo "3. Windows. Server GUI. Two clients."
-  echo "4. Windows. Server GUI. One client."
-  echo "5. Windows. Server Core. Two clients."
-  echo "6. Windows. Server Core. One client."
+  echo "1. GNU/Linux: SRV, CLI-C, CLI-P"
+  echo "2. GNU/Linux: SRV, CLI-C"
+  echo "3. Windows server 2019: SRV (with GUI); Windows 10: CLI-C, CLI-P"
+  echo "4. Windows server 2019: SRV (with GUI); Windows 10: CLI-C"
+  echo "5. Windows server 2019: SRV (no GUI); Windows 10: CLI-C, CLI-P"
+  echo "6. Windows server 2019: SRV (no GUI); Windows 10: CLI-C"
+  echo "7. GNU/Linux: SRV, CLI-C; Windows 7: CLI-P"
+  echo "8. Windows server 2019: SRV (with GUI); Windows 7: CLI-C"
   echo
   read -p "Your option (h for help): " option
 
