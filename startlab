@@ -3,8 +3,8 @@
 # E-mail: grishnan@gmail.com
 # License: GNU GENERAL PUBLIC LICENSE Version 3
 
-mdir=machines # machines directory
-switch=br0    # bridge name
+mdir=.machines # machines directory
+switch=br0     # bridge name
 
 if ! ip -br -f link -c a | awk '{ print $1 }' | grep $switch > /dev/null 2>&1; then
   ip link add $switch type bridge
@@ -23,10 +23,10 @@ function startmachine {
 
 function check_vm {
   # check whether snapshots of VMs exist in directory $1 and if not, create their
-  for vm in $(ls ./machines/$1/.base/)
+  for vm in $(ls ./$mdir/$1/.base/)
   do
-    if ! test -f ./machines/$1/$vm.qcow2; then
-      cd ./machines/$1/
+    if ! test -f ./$mdir/$1/$vm.qcow2; then
+      cd ./$mdir/$1/
       qemu-img create -f qcow2 -b .base/$vm $vm.qcow2 > /dev/null 2>&1
       cd ../../
     fi
@@ -47,11 +47,11 @@ function startmachines {
 }
 
 # create hard disk drives if they don't exist
-if ! test -f ./machines/hd/hd1.qcow2; then
-  qemu-img create -f qcow2 ./machines/hd/hd1.qcow2 2G > /dev/null 2>&1
+if ! test -f ./$mdir/hd/hd1.qcow2; then
+  qemu-img create -f qcow2 ./$mdir/hd/hd1.qcow2 2G > /dev/null 2>&1
 fi
-if ! test -f ./machines/hd/hd2.qcow2; then
-  qemu-img create -f qcow2 ./machines/hd/hd2.qcow2 2G > /dev/null 2>&1
+if ! test -f ./$mdir/hd/hd2.qcow2; then
+  qemu-img create -f qcow2 ./$mdir/hd/hd2.qcow2 2G > /dev/null 2>&1
 fi
 
 case $1 in
