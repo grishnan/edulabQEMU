@@ -37,6 +37,7 @@ function print_help {
   echo
   echo "  n   run configuration №n (n - number) "
   echo "  h   print this help"
+  echo "  c   clear configuration"
   echo "  q   quit"
   echo 
 }
@@ -47,6 +48,26 @@ function startlab {
     y|Y) ./startlab $1; exit 0 ;;
     *) echo ;;
   esac
+}
+
+function do_clearing {
+  rm -f ./machines/$1/*.qcow2
+  echo -e "\e[34mclearing configuration №$1 completed successfully\033[0m"
+  echo
+}
+
+function clear_configuration {
+  read -p "What configuration do you wanna clear? (type number): " number
+  if [[ $(seq $CA) =~ (^|[[:space:]])$number($|[[:space:]]) ]]; then
+    read -p "Are you sure? (yes/no): " answer
+    case $answer in
+      yes) do_clearing $number;;
+      y|Y) echo -e "\e[31mPlease, type 'yes'\033[0m"; echo ;;
+      *) echo ;;
+    esac
+  else
+    echo -e "\e[31m$option: unknown configuration\033[0m"; echo
+  fi
 }
 
 clear # screen
@@ -73,6 +94,7 @@ do
     case $option in
       h) print_help ;;
       q) exit 0 ;;
+      c) clear_configuration ;;
       *) echo -e "\e[31m$option: unknown option\033[0m"; echo ;;
     esac
   fi
