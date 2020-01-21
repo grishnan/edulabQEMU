@@ -3,7 +3,8 @@
 # E-mail: grishnan@gmail.com
 # License: GNU GENERAL PUBLIC LICENSE Version 3
 
-CA=8 # configurations amount
+mdir=.machines # machines directory
+CA=8           # configurations amount
 
 function check_root_privileges {
   if [ $EUID -ne 0 ]; then
@@ -51,7 +52,7 @@ function startlab {
 }
 
 function do_clearing {
-  rm -f ./machines/$1/*.qcow2
+  rm -f ./$mdir/$1/*.qcow2
   echo -e "\e[34mclearing configuration №$1 completed successfully\033[0m"
   echo
 }
