@@ -21,13 +21,17 @@ function print_scheme () {
       echo
       echo -e "\033[1mCLI-C\033[0m"
       echo -e "     \\"
-      echo -e "      br0 — \033[1mSRV\033[0m — WAN"
+      echo -e "\033[1mSRV\033[0m — br0 — \033[1mRTR\033[0m — WAN"
       echo -e "     /"
       echo -e "\033[1mCLI-P\033[0m"
       echo ;;
     2|4|6|8)
       echo
-      echo -e "\033[1mCLI-C\033[0m — br0 — \033[1mSRV\033[0m — WAN"
+      echo -e "  \033[1mSRV\033[0m"
+      echo -e "     \\"
+      echo -e "      br0 — \033[1mRTR\033[0m — WAN"
+      echo -e "     /"
+      echo -e "  \033[1mCLI-C\033[0m"
       echo ;;
   esac
 }
@@ -78,14 +82,14 @@ while [ 1 ]
 do
   echo -e "\033[1mPlease, choose one of the listed options\033[0m:"
   echo
-  echo "1. GNU/Linux: SRV, CLI-C, CLI-P"
-  echo "2. GNU/Linux: SRV, CLI-C"
-  echo "3. Windows server 2019: SRV (with GUI); Windows 10: CLI-C, CLI-P"
-  echo "4. Windows server 2019: SRV (with GUI); Windows 10: CLI-C"
-  echo "5. Windows server 2019: SRV (no GUI); Windows 10: CLI-C, CLI-P"
-  echo "6. Windows server 2019: SRV (no GUI); Windows 10: CLI-C"
-  echo "7. GNU/Linux: SRV, CLI-C; Windows 7: CLI-P"
-  echo "8. Windows server 2019: SRV (with GUI); Windows 7: CLI-C"
+  echo "1. Linux: RTR, SRV, CLI-C, CLI-P"
+  echo "2. Linux: RTR, SRV, CLI-C"
+  echo "3. Linux: RTR; Windows server 2019 GUI: SRV; Windows 10: CLI-C, CLI-P"
+  echo "4. Linux: RTR; Windows server 2019 GUI: SRV; Windows 10: CLI-C"
+  echo "5. Linux: RTR; Windows server 2019 no GUI: SRV; Windows 10: CLI-C, CLI-P"
+  echo "6. Linux: RTR; Windows server 2019 no GUI: SRV; Windows 10: CLI-C"
+  echo "7. Linux: RTR, SRV, CLI-C; Windows 7: CLI-P"
+  echo "8. Linux: RTR; Windows server 2019 GUI: SRV; Windows 7: CLI-C"
   echo
   read -p "Your option (h for help): " option
 
