@@ -57,12 +57,12 @@ if ! test -f ./$mdir/hd/hd2.qcow2; then
 fi
 
 case $1 in
-  1) startmachines 1 50 200 200 200  ;; # startmachines <dir> <mem RTR> <mem SRV> <mem CLI-C> <mem CLI-P>
-  2) startmachines 2 50 200 200      ;; # startmachines <dir> <mem RTR> <mem SRV> <mem CLI-C>
-  3) startmachines 3 50 1500 768 768 ;;
-  4) startmachines 4 50 2000 768     ;;
-  5) startmachines 5 50 512 768 768  ;;
-  6) startmachines 6 50 512 1000     ;;
-  7) startmachines 7 50 200 200 512  ;;
-  8) startmachines 8 50 1500 512     ;;
+  1) startmachines 1 70 200 200 200  ;; # startmachines <dir> <mem RTR> <mem SRV> <mem CLI-C> <mem CLI-P>
+  2) startmachines 2 70 200 200      ;; # startmachines <dir> <mem RTR> <mem SRV> <mem CLI-C>
+  3) startmachines 3 70 1500 768 768 ;;
+  4) startmachines 4 70 2000 768     ;;
+  5) startmachines 5 70 512 768 768  ;;
+  6) startmachines 6 70 512 1000     ;;
+  7) startmachines 7 70 200 200 512  ;;
+  8) startmachines 8 70 1500 512     ;;
 esac
