@@ -65,4 +65,5 @@ case $1 in
   6) startmachines 6 70 512 1000     ;;
   7) startmachines 7 70 200 200 512  ;;
   8) startmachines 8 70 1500 512     ;;
+  9) startmachines 9 70 1024 512 512 ;;
 esac

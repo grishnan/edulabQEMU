@@ -4,7 +4,7 @@
 # License: GNU GENERAL PUBLIC LICENSE Version 3
 
 mdir=.machines # machines directory
-CA=8           # configurations amount
+CA=9           # configurations amount
 
 function check_root_privileges {
   if [ $EUID -ne 0 ]; then
@@ -17,7 +17,7 @@ function check_root_privileges {
 
 function print_scheme () {
   case $1 in
-    1|3|5|7) 
+    1|3|5|7|9) 
       echo
       echo -e "\033[1mCLI-C\033[0m"
       echo -e "     \\"
@@ -90,6 +90,7 @@ do
   echo "6. Linux: RTR; Windows server 2019 no GUI: SRV; Windows 10: CLI-C"
   echo "7. Linux: RTR, SRV, CLI-C; Windows 7: CLI-P"
   echo "8. Linux: RTR; Windows server 2019 GUI: SRV; Windows 7: CLI-C"
+  echo "9. Linux: RTR; Windows server 2012 R2 GUI: SRV; Windows 7: CLI-C, CLI-P"
   echo
   read -p "Your option (h for help): " option
 
