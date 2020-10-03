@@ -3,8 +3,8 @@
 # E-mail: grishnan@gmail.com
 # License: GNU GENERAL PUBLIC LICENSE Version 3
 
-mdir=.machines # machines directory
-CA=9           # configurations amount
+mdir=.machines  # machines directory
+CA=10           # configurations amount
 
 function check_root_privileges {
   if [ $EUID -ne 0 ]; then
@@ -32,6 +32,14 @@ function print_scheme () {
       echo -e "      br0 — \033[1mRTR\033[0m — WAN"
       echo -e "     /"
       echo -e "  \033[1mCLI-C\033[0m"
+      echo ;;
+    10)
+      echo
+      echo -e " \033[1mSRV1\033[0m     \033[1mSRV2\033[0m"
+      echo -e "     \\   /"
+      echo -e "      br0 — \033[1mRTR\033[0m — WAN"
+      echo -e "     /   \\"
+      echo -e "\033[1mCLI-C\033[0m     \033[1mCLI-P\033[0m"
       echo ;;
   esac
 }
@@ -82,15 +90,16 @@ while [ 1 ]
 do
   echo -e "\033[1mPlease, choose one of the listed options\033[0m:"
   echo
-  echo "1. Linux: RTR, SRV, CLI-C, CLI-P"
-  echo "2. Linux: RTR, SRV, CLI-C"
-  echo "3. Linux: RTR; Windows server 2019 GUI: SRV; Windows 10: CLI-C, CLI-P"
-  echo "4. Linux: RTR; Windows server 2019 GUI: SRV; Windows 10: CLI-C"
-  echo "5. Linux: RTR; Windows server 2019 no GUI: SRV; Windows 10: CLI-C, CLI-P"
-  echo "6. Linux: RTR; Windows server 2019 no GUI: SRV; Windows 10: CLI-C"
-  echo "7. Linux: RTR, SRV, CLI-C; Windows 7: CLI-P"
-  echo "8. Linux: RTR; Windows server 2019 GUI: SRV; Windows 7: CLI-C"
-  echo "9. Linux: RTR; Windows server 2012 R2 GUI: SRV; Windows 7: CLI-C, CLI-P"
+  echo " 1. Linux: raw RTR, SRV, CLI-C, CLI-P"
+  echo " 2. Linux: raw RTR, SRV, CLI-C"
+  echo " 3. Linux: raw RTR; Windows server 2019 GUI: SRV; Windows 10: CLI-C, CLI-P"
+  echo " 4. Linux: raw RTR; Windows server 2019 GUI: SRV; Windows 10: CLI-C"
+  echo " 5. Linux: raw RTR; Windows server 2019 no GUI: SRV; Windows 10: CLI-C, CLI-P"
+  echo " 6. Linux: raw RTR; Windows server 2019 no GUI: SRV; Windows 10: CLI-C"
+  echo " 7. Linux: raw RTR, SRV, CLI-C; Windows 7: CLI-P"
+  echo " 8. Linux: raw RTR; Windows server 2019 GUI: SRV; Windows 7: CLI-C"
+  echo " 9. Linux: raw RTR; Windows server 2012 R2 GUI: SRV; Windows 7: CLI-C, CLI-P"
+  echo "10. Linux: working RTR; Windows server 2012 R2 GUI: SRV1, SRV2; Windows 7: CLI-C, CLI-P"
   echo
   read -p "Your option (h for help): " option
 

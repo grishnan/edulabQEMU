@@ -45,6 +45,12 @@ function startmachines {
     startmachine SRV   4 $3 $1 "-hdc $mdir/hd/hd1.qcow2 -hdd $mdir/hd/hd2.qcow2"
     startmachine CLI-C 1 $4 $1
     startmachine CLI-P 1 $5 $1
+  elif [ $# -eq 6 ]; then
+    startmachine RTR   1 $2 $1 "-device e1000,netdev=wan0,mac=$(genmac) -netdev user,id=wan0"
+    startmachine SRV1  2 $3 $1
+    startmachine SRV2  2 $4 $1
+    startmachine CLI-C 1 $5 $1
+    startmachine CLI-P 1 $6 $1
   fi
 }
 
@@ -57,13 +63,14 @@ if ! test -f ./$mdir/hd/hd2.qcow2; then
 fi
 
 case $1 in
-  1) startmachines 1 80 200 200 200  ;; # startmachines <dir> <mem RTR> <mem SRV> <mem CLI-C> <mem CLI-P>
-  2) startmachines 2 80 200 200      ;; # startmachines <dir> <mem RTR> <mem SRV> <mem CLI-C>
-  3) startmachines 3 80 2000 768 768 ;;
-  4) startmachines 4 80 2000 768     ;;
-  5) startmachines 5 80 512 768 768  ;;
-  6) startmachines 6 80 512 1000     ;;
-  7) startmachines 7 80 200 200 512  ;;
-  8) startmachines 8 80 1500 512     ;;
-  9) startmachines 9 80 1024 512 512 ;;
+   1) startmachines  1 80 200 200 200  ;; # startmachines <dir> <mem RTR> <mem SRV> <mem CLI-C> <mem CLI-P>
+   2) startmachines  2 80 200 200      ;; # startmachines <dir> <mem RTR> <mem SRV> <mem CLI-C>
+   3) startmachines  3 80 2000 768 768 ;;
+   4) startmachines  4 80 2000 768     ;;
+   5) startmachines  5 80 512 768 768  ;;
+   6) startmachines  6 80 512 1000     ;;
+   7) startmachines  7 80 200 200 512  ;;
+   8) startmachines  8 80 1500 512     ;;
+   9) startmachines  9 80 1024 512 512 ;;
+  10) startmachines 10 80 3096 3096 1024 1024 ;; # startmachines <dir> <mem RTR> <mem SRV1> <mem SRV2> <mem CLI-C> <mem CLI-P>
 esac
