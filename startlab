@@ -11,14 +11,10 @@ if ! ip -br -f link -c a | awk '{ print $1 }' | grep $switch > /dev/null 2>&1; t
 fi
 ip link set $switch up
 
-function genmac {
-  echo "$(printf '00:60:2F:%02X:%02X:%02X\n' $[RANDOM%256] $[RANDOM%256] $[RANDOM%256])"
-}
-
 function startmachine {
   qemu-system-x86_64 -name $1 -enable-kvm -machine q35,kernel_irqchip=on,vmport=off \
-                     -cpu host -smp cores=$2 -boot order=c -drive file=$mdir/$4/$1.qcow2,format=qcow2 -m size=$3M $5 $6 \
-                     -device e1000,netdev=lan0,mac=$(genmac) -netdev tap,id=lan0,script=./qemu-ifup,downscript=./qemu-ifdown -sdl -display sdl&
+                     -cpu host -smp cores=$2 -boot order=c -drive file=$mdir/$4/$1.qcow2,format=qcow2 -m size=$3M $6 $7\
+                     -device e1000,netdev=lan0,mac=$5 -netdev tap,id=lan0,script=./qemu-ifup,downscript=./qemu-ifdown &
 }
 
 function check_vm {
@@ -36,21 +32,28 @@ function check_vm {
 function startmachines {
   check_vm $1
   if [ $# -eq 4 ]; then
-    # startmachine <machine name> <cores> <memory in MB> <dir>
-    startmachine RTR   1 $2 $1 "-device e1000,netdev=wan0,mac=$(genmac) -netdev user,id=wan0"
-    startmachine SRV   2 $3 $1 "-hdc $mdir/hd/hd1.qcow2 -hdd $mdir/hd/hd2.qcow2"
-    startmachine CLI-C 1 $4 $1
+    # startmachine <machine name> <cores> <memory in MB> <dir> <display> <WAN interface>
+    startmachine RTR   1 $2 $1 "00:60:2F:00:11:22" "-display none -daemonize" "-device e1000,netdev=wan0,mac=00:60:2F:AA:BB:CC -netdev user,id=wan0"
+    # startmachine <machine name> <cores> <memory in MB> <dir> <display> <hdd>
+    startmachine SRV   2 $3 $1 "00:60:2F:11:11:22" "-sdl -display sdl" "-hdc $mdir/hd/hd1.qcow2 -hdd $mdir/hd/hd2.qcow2"
+    # startmachine <machine name> <cores> <memory in MB> <dir> <display>
+    startmachine CLI-C 1 $4 $1 "00:60:2F:22:11:22" "-sdl -display sdl" 
   elif [ $# -eq 5 ]; then
-    startmachine RTR   1 $2 $1 "-device e1000,netdev=wan0,mac=$(genmac) -netdev user,id=wan0"
-    startmachine SRV   4 $3 $1 "-hdc $mdir/hd/hd1.qcow2 -hdd $mdir/hd/hd2.qcow2"
-    startmachine CLI-C 1 $4 $1
-    startmachine CLI-P 1 $5 $1
+    # startmachine <machine name> <cores> <memory in MB> <dir> <display> <WAN interface>
+    startmachine RTR   1 $2 $1 "00:60:2F:00:11:22" "-display none -daemonize" "-device e1000,netdev=wan0,mac=00:60:2F:AA:BB:CC -netdev user,id=wan0"
+    # startmachine <machine name> <cores> <memory in MB> <dir> <display> <hdd>
+    startmachine SRV   4 $3 $1 "00:60:2F:11:11:22" "-sdl -display sdl" "-hdc $mdir/hd/hd1.qcow2 -hdd $mdir/hd/hd2.qcow2"
+    # startmachine <machine name> <cores> <memory in MB> <dir> <display>
+    startmachine CLI-C 1 $4 $1 "00:60:2F:22:11:22" "-sdl -display sdl" 
+    startmachine CLI-P 1 $5 $1 "00:60:2F:33:11:22" "-sdl -display sdl" 
   elif [ $# -eq 6 ]; then
-    startmachine RTR   1 $2 $1 "-device e1000,netdev=wan0,mac=$(genmac) -netdev user,id=wan0"
-    startmachine SRV1  2 $3 $1
-    startmachine SRV2  2 $4 $1
-    startmachine CLI-C 1 $5 $1
-    startmachine CLI-P 1 $6 $1
+    # startmachine <machine name> <cores> <memory in MB> <dir> <display> <WAN interface>
+    startmachine RTR   1 $2 $1 "00:60:2F:00:11:22"  "-display none -daemonize" "-device e1000,netdev=wan0,mac=00:60:2F:AA:BB:CC -netdev user,id=wan0"
+    # startmachine <machine name> <cores> <memory in MB> <dir> <display>
+    startmachine SRV1  2 $3 $1 "00:60:2F:11:11:22" "-sdl -display sdl" 
+    startmachine SRV2  2 $4 $1 "00:60:2F:22:11:22" "-sdl -display sdl" 
+    startmachine CLI-C 1 $5 $1 "00:60:2F:33:11:22" "-sdl -display sdl" 
+    startmachine CLI-P 1 $6 $1 "00:60:2F:44:11:22" "-sdl -display sdl" 
   fi
 }
 
